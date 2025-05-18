@@ -5,6 +5,13 @@ $(document).ready(function () {
   // Load initial content for main-content
   var urlParams = new URLSearchParams(window.location.search);
   var page = urlParams.get("page") || "homepage";
+  // Umleitung verhindern, wenn eingeloggt
+  if (
+    (sessionStorage.getItem("userLoggedIn") || getCookie("user_id")) &&
+    page === "login"
+  ) {
+    page = "homepage"; // Weiterleitung auf Homepage
+  }
   var orderId = urlParams.get("order_id") || null;
   $("#main-content").load("sites/" + page + ".html", function () {
     if (orderId) {
