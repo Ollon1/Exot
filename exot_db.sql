@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 18. Mai 2025 um 16:58
+-- Erstellungszeit: 19. Mai 2025 um 22:21
 -- Server-Version: 10.4.32-MariaDB
 -- PHP-Version: 8.2.12
 
@@ -199,7 +199,7 @@ INSERT INTO `user` (`id`, `salutation`, `firstname`, `lastname`, `address`, `zip
 (1, 'Mr.', '123', '123', '1231234', '123', '123', '12345@gmail.com', '123', '$2y$10$tORSOY4RzmmmYKlZUaKny.sINR8vIguGstBltqk0/UNZMS.aZ3Nre', 'credit_card', 'active'),
 (2, 'Mrs.', 'tester', 'tester', 'Testerstraße 1', '1001', 'Wien', 'tester@email.com', 'tester123', '$2y$10$4eugjzUBHW8m7vy0KdxnjufG5Qa.GnQ/uYL9/jie7ejFIymNvrJH.', 'debit_card', 'inactive'),
 (8, 'Mr.', 'Admin', 'Admin', 'Admin Street 20', '100', 'Administrator Town', 'admin@gmail.com', 'admin', '$2y$10$FMiAiGU.XMjxX50v3XVo6Ow0jyaWFTUUfn4nzTwJ6U6Ui9kYP6vgq', 'paypal', 'active'),
-(14, 'Mr.', 'Michael', 'Massimo', 'höchstädtplatz 6', '1200', 'wien', 'a@a.com', 'michimo', '$2y$10$h916SQpK/KrN2b5CFW0yt.ZbcOwtrwXs7GV2P7TyczrNLey3pq2C.', 'debit_card', 'active');
+(14, 'Mr.', 'Michael', 'Massimo', 'höchstädtplatz 6', '1200', 'wien', 'a@a.com', 'michimo', '$2y$10$bhzrRkxWVQQRNSGKfPnncOWanYHH920tGHn.K5OCTWm6f01XQWNsq', 'debit_card', 'active');
 
 -- --------------------------------------------------------
 
