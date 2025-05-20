@@ -150,7 +150,7 @@ $("#confirm-payment-btn").on("click", function () {
 
       if (Object.keys(currentCart).length === 0) {
         $("table tbody").html(
-          '<tr><td colspan="5">Ihr Warenkorb ist leer oder wurde schon bestellt</td></tr>'
+          '<tr><td colspan="5" class="text-danger">Ihr Warenkorb ist leer oder wurde schon bestellt</td></tr>'
         );
       }
 
