@@ -90,8 +90,17 @@ $(document).ready(function () {
     handleNavigationClick(event, "orders");
   });
   $("#shoppingcart-nav").click(function (event) {
-    handleNavigationClick(event, "cart");
+    event.preventDefault();
+    const pageName = "cart";
+    const url = "sites/" + pageName + ".html";
+    $("#main-content").load(url, function () {
+      if (typeof initCartView === "function") {
+        initCartView();
+      }
+      window.history.pushState({}, "", "?page=" + pageName);
+    });
   });
+
   $("#profile-nav").click(function (event) {
     handleNavigationClick(event, "profile");
   });
