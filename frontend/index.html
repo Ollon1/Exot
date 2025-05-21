@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>ExoT Webshop – Exotische Tiere online entdecken</title>
+	<meta name="description"
+		content="Der ExoT Webshop bietet exotische Tierkategorien wie Raubtiere, Fische und Säugetiere. Jetzt entdecken, stöbern und shoppen!" />
+	<meta name="keywords" content="ExoT, exotische Tiere, Tiere online, Webshop, Raubtiere, Fische, Säugetiere" />
+	<meta name="author" content="MMA GmbH" />
+	<meta name="robots" content="index, follow" />
+
+	<!-- Open Graph für Social Media -->
+	<meta property="og:title" content="ExoT Webshop – Exotische Tiere entdecken" />
+	<meta property="og:description"
+		content="Entdecke exotische Tierkategorien wie Raubtiere oder Fische im ExoT Webshop." />
+	<meta property="og:image" content="https://meine-domain.at/res/img/WebShopLogo.png" />
+	<meta property="og:url" content="https://meine-domain.at" />
+	<meta property="og:type" content="website" />
+
+	<!-- Twitter Cards -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="ExoT Webshop" />
+	<meta name="twitter:description" content="Entdecke exotische Tierkategorien und spannende Angebote." />
+	<meta name="twitter:image" content="https://meine-domain.at/res/img/WebShopLogo.png" />
+
+	<link rel="stylesheet" href="res/css/custom.css" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" />
+	<script src="js/jquery.js"></script>
+	<script src="js/navigation.js"></script>
+	<script src="js/globalFunctions.js"></script>
+	<!-- Bootstrp-Icons hinzufügen -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+
+<body>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Header -->
+	<header class="p-3 text-bg-dark">
+		<div class="container d-flex flex-wrap align-items-center justify-content-between">
+			<div class="d-flex align-items-center">
+				<img class="logo" src="res/img/WebShopLogo.png" alt="ExoT Logo" style="height: 80px" />
+				<a id="home-nav-logo" href="#" class="nav-link px-3 text-white">
+					<h1>ExoT Webshop</h1>
+				</a>
+			</div>
+			<nav>
+				<ul class="nav">
+					<li><a id="home-nav" href="#" class="nav-link px-3 text-white">Home</a></li>
+					<li><a id="shop-nav" href="#" class="nav-link px-3 text-white">Shop</a></li>
+					<li><a id="faq-nav" href="#" class="nav-link px-3 text-white">FAQs</a></li>
+					<li><a id="imprint-nav" href="#" class="nav-link px-3 text-white">Imprint</a></li>
+				</ul>
+			</nav>
+			<div id="auth-buttons" class="text-end">
+				<button id="login-nav" type="button" class="btn btn-outline-light me-3">Login</button>
+				<button id="registration-nav" type="button" class="btn btn-warning me-3">Sign-up</button>
+			</div>
+			<div id="user-dropdown" class="dropdown text-end ms-3" style="display: none">
+				<a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+					data-bs-toggle="dropdown" aria-expanded="false">
+					<img src="res/img/profile.png" alt="Benutzerprofil-Bild" width="60" height="60"
+						class="rounded-circle" />
+				</a>
+				<ul class="dropdown-menu text-small">
+					<li><a id="shoppingcart-nav" class="dropdown-item" href="#">Shopping Cart</a></li>
+					<li><a id="orders-nav" class="dropdown-item" href="#">Your Orders</a></li>
+					<li><a id="profile-nav" class="dropdown-item" href="#">Profile</a></li>
+					<li id="admin-dropdown" style="display: none">
+						<hr class="dropdown-divider" /><a id="admin-nav" class="dropdown-item" href="#">Admin</a>
+					</li>
+					<li>
+						<hr class="dropdown-divider" />
+					</li>
+					<li><a id="sign-out" class="dropdown-item" href="#">Sign out</a></li>
+				</ul>
+			</div>
+		</div>
+	</header>
+
+	<!-- Main Content -->
+	<main id="main-content" class="container" aria-label="Hauptinhalt"></main>
+
+	<footer class="bg-light text-center text-lg-start mt-5 border-top">
+		<div class="container p-4">
+			<div class="row align-items-center">
+				<!-- Linke Seite Buttons -->
+				<div class="col-md-4 text-start text-muted mb-2 mb-md-0">
+					© 2025 MMA GmbH
+				</div>
+
+				<!-- Zentrale Social Media Icons -->
+				<div class="col-md-4 text-center mb-2 mb-md-0">
+					<a href="https://facebook.com/DeineSeite" target="_blank" class="text-muted me-3">
+						<i class="bi bi-facebook" style="font-size: 1.5rem;"></i>
+					</a>
+					<a href="https://twitter.com/DeineSeite" target="_blank" class="text-muted me-3">
+						<i class="bi bi-twitter" style="font-size: 1.5rem;"></i>
+					</a>
+					<a href="https://instagram.com/DeineSeite" target="_blank" class="text-muted me-3">
+						<i class="bi bi-instagram" style="font-size: 1.5rem;"></i>
+					</a>
+				</div>
+
+				<!-- Rechte Seite -->
+				<div class="col-md-4 text-end">
+					<ul class="nav justify-content-end">
+						<li><a id="home-nav-footer" href="#" class="nav-link px-2 text-muted">Home</a></li>
+						<li><a id="shop-nav-footer" href="#" class="nav-link px-2 text-muted">Shop</a></li>
+						<li><a id="faq-nav-footer" href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+						<li><a id="imprint-nav-footer" href="#" class="nav-link px-2 text-muted">Imprint</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+</body>
+
+</html>
