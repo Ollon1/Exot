@@ -1,3 +1,4 @@
+    http_response_code(405);
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -13,10 +14,12 @@ $email_or_username_err = $password_err = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode(file_get_contents('php://input'), true);
+    // Eingabedaten auslesen & bereinigen
     $email_or_username = trim($data["email_or_username"]);
     $password = trim($data["password"]);
     $remember_me = isset($data["remember_me"]) ? $data["remember_me"] : false;
 
+    // Nur fortfahren, wenn keine Fehler
     if (empty($email_or_username)) {
         $email_or_username_err = "Please enter your email or username.";
     }
@@ -47,7 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $is_admin = $dataHandler->isAdmin($user->id);
                 $_SESSION["is_admin"] = $is_admin;
                 $_SESSION["admin_role"] = $is_admin ? $dataHandler->getAdminRole($user->id) : null;
-
+                
+                // "Remember me" Cookies setzen (optional)
                 if ($remember_me) {
                     setcookie("user_id", $user->id, time() + (86400 * 30), "/");
                     setcookie("is_admin", $is_admin, time() + (86400 * 30), "/");
@@ -78,6 +82,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ]);
     }
 } else {
-    http_response_code(405);
     echo json_encode(['error' => 'Method Not Allowed']);
 }

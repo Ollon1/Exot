@@ -22,6 +22,12 @@ function requireAdmin()
     }
 }
 
+/**
+ * Checks if the user is an admin and has the given role.
+ * If the condition is not met, it sends a 403 response with an "Access denied" error message.
+ *
+ * @param string $requiredRole The required role.
+ */
 function requireAdminRole($requiredRole)
 {
     if (!isAdmin() || getUserRole() !== $requiredRole) {

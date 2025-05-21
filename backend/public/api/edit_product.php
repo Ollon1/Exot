@@ -7,12 +7,14 @@ require_once '../../logic/datahandler.php';
 require_once '../../models/product.class.php';
 require_once '../../middleware.php';
 
+// Nur Admins dürfen Produkte bearbeiten
 checkAdmin();
 
 header('Content-Type: application/json');
 
 $dataHandler = new DataHandler();
 
+// Eingabedaten aus dem POST-Request lesen
 $product_id = $_POST['product_id'] ?? null;
 $product_name = $_POST['product_name'] ?? null;
 $product_description = $_POST['product_description'] ?? null;
@@ -21,12 +23,14 @@ $product_weight = $_POST['product_weight'] ?? null;
 $product_quantity = $_POST['product_quantity'] ?? null;
 $product_category = $_POST['product_category'] ?? null;
 
+// Überprüfen, ob alle Pflichtfelder ausgefüllt sind
 if (!$product_id || !$product_name || !$product_description || !$product_price || !$product_weight || !$product_quantity || !$product_category) {
     http_response_code(400);
     echo json_encode(['error' => 'All fields are required']);
     exit;
 }
 
+// Prüfen, ob das Produktbild geändert werden soll  
 $change_image = isset($_POST['change_image']) && $_POST['change_image'] === 'true';
 $product_imagepath = null;
 
@@ -37,22 +41,26 @@ if ($change_image && isset($_FILES['product_imagepath'])) {
     $target_file = $target_dir . basename($product_image["name"]);
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
+    // Überprüfen, ob es sich um ein echtes Bild handelt
     $check = getimagesize($product_image["tmp_name"]);
     if ($check === false) {
         echo json_encode(['error' => 'File is not an image.']);
         exit;
     }
 
+    // Prüfen, ob die Datei bereits existiert (Vermeidung von Überschreibungen)
     if (file_exists($target_file)) {
         echo json_encode(['error' => 'File already exists.']);
         exit;
     }
 
+    //Datengröße prüfen(max. 500KB)
     if ($product_image["size"] > 500000) {
         echo json_encode(['error' => 'Sorry, your file is too large.']);
         exit;
     }
 
+    //Erlaubte Dateitypen
     $allowed_types = ["jpg", "jpeg", "png", "gif"];
     if (!in_array($imageFileType, $allowed_types)) {
         echo json_encode(['error' => 'Sorry, only JPG, JPEG, PNG & GIF files are allowed.']);
@@ -76,6 +84,7 @@ if ($change_image && isset($_FILES['product_imagepath'])) {
     }
 }
 
+// Neues Produktobjekt mit aktualisierten Daten erstellen
 $product = new Product(
     $product_id,
     $product_name,
@@ -87,6 +96,7 @@ $product = new Product(
     $product_imagepath
 );
 
+// Produkt in der Datenbank aktualisieren
 if ($dataHandler->updateProduct($product)) {
     echo json_encode(['status' => 'success']);
 } else {

@@ -13,6 +13,12 @@ $(document).ready(function () {
 		fetchProductData(productId);
 	});
 
+/**
+ * Fetches the product data from the server and fills the form fields with the
+ * received data.
+ *
+ * @param {number} productId - The ID of the product to fetch.
+ */
 	function fetchProductData(productId) {
 		$.ajax({
 			url: '../backend/public/api/products.php',

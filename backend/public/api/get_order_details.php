@@ -7,8 +7,6 @@ require_once '../../logic/datahandler.php';
 
 header('Content-Type: application/json');
 
-
-// Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     error_log('Unauthorized access attempt');
     http_response_code(401);
@@ -16,6 +14,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+//Abfrage nach order id, prüfung ob order id zurückgeliefert
 $order_id = $_GET['order_id'] ?? null;
 
 if (!$order_id) {
@@ -28,6 +27,7 @@ if (!$order_id) {
 $dataHandler = new DataHandler();
 $order = $dataHandler->getOrderById($order_id);
 
+//wenn keine order id zurückgeliefert wurde
 if (!$order) {
     error_log("Order not found for ID: $order_id");
     http_response_code(404);

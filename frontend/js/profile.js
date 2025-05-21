@@ -1,6 +1,6 @@
 $(document).ready(function () {
 	// Fetch and display user data
-	fetchUserData(false);
+	fetchUserData(true);
 
 	// Show password confirmation modal on clicking Edit Profile button
 	$('#edit-profile-btn').on('click', function () {

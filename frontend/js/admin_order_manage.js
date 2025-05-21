@@ -14,6 +14,12 @@ $(document).ready(function () {
 		});
 	}
 
+/**
+ * Populate the orders table with the given orders data
+ * @param {Array} orders - An array of orders objects, each containing
+ *                         the order ID, customer ID, total price, status,
+ *                         and date
+ */
 	function populateOrdersTable(orders) {
 		const ordersTableBody = $('#orders-table tbody');
 		ordersTableBody.empty();
@@ -39,6 +45,11 @@ $(document).ready(function () {
 		});
 	}
 
+/**
+ * Fetch the details of the order with the given ID and populate the
+ * edit order modal with the data
+ * @param {number} orderId - The ID of the order to fetch details for
+ */
 	function fetchOrderDetails(orderId) {
 		$.ajax({
 			url: '../backend/public/api/get_order_details.php',
@@ -55,6 +66,11 @@ $(document).ready(function () {
 		});
 	}
 
+/**
+ * Populate the edit order form with the given order and items data
+ * @param {Object} order - The order object, containing the order ID, customer ID, total price, status, and date
+ * @param {Array} items - An array of order item objects, each containing the order item ID, product ID, product name, quantity, and subtotal
+ */
 	function populateEditOrderForm(order, items) {
 		const orderItemsTableBody = $('#order-items-table tbody');
 		orderItemsTableBody.empty();

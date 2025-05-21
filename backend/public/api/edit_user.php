@@ -15,6 +15,7 @@ $dataHandler = new DataHandler();
 
 $action = $_POST['action'] ?? null;
 
+// === 1. Benutzer aktualisieren ===
 if ($action === 'update_user') {
     $user_id = $_POST['user_id'] ?? null;
     $user_salutation = $_POST['user_salutation'] ?? null;
@@ -29,12 +30,14 @@ if ($action === 'update_user') {
     $user_payment_method = $_POST['user_payment_method'] ?? null;
     $user_status = $_POST['user_status'] ?? null;
 
+     // Validierung: Alle Felder müssen vorhanden sein
     if (!$user_id || !$user_salutation || !$user_firstname || !$user_lastname || !$user_address || !$user_zipcode || !$user_city || !$user_email || !$user_username || !$user_password || !$user_payment_method || $user_status === null) {
         http_response_code(400);
         echo json_encode(['error' => 'All fields are required']);
         exit;
     }
 
+    // Neues User-Objekt mit den Eingabedaten erstellen
     $user = new User(
         $user_id,
         $user_salutation,
@@ -56,22 +59,26 @@ if ($action === 'update_user') {
         http_response_code(500);
         echo json_encode(['error' => 'Failed to update user']);
     }
+    // === 2. Benutzerstatus ändern ===
 } elseif ($action === 'set_status') {
     $user_id = $_POST['user_id'] ?? null;
     $user_status = $_POST['status'] ?? null;
 
+     // Prüfung: user_id und status müssen übergeben werden
     if (!$user_id || $user_status === null) {
         http_response_code(400);
         echo json_encode(['error' => 'User ID and status are required']);
         exit;
     }
 
+     // Status aktualisieren (z. B. aktiv/inaktiv)
     if ($dataHandler->setUserStatus($user_id, $user_status)) {
         echo json_encode(['status' => 'success']);
     } else {
         http_response_code(500);
         echo json_encode(['error' => 'Failed to set user status']);
     }
+    // === 3. Ungültige Aktion ===  
 } else {
     http_response_code(400);
     echo json_encode(['error' => 'Invalid action']);

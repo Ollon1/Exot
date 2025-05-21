@@ -1,6 +1,12 @@
 let selectedItemKey = null;
 let currentCart = {};
 
+/**
+ * Initialize the cart view by rendering all items in the cart
+ * and appending them to the table body. If the cart is empty,
+ * append a message indicating that the cart is empty or has
+ * already been ordered.
+ */
 function initCartView() {
   const tableBody = $("table tbody");
   tableBody.empty();
@@ -91,6 +97,11 @@ $(document).on("click", ".buy-now", function () {
   });
 });
 
+
+/**
+ * Fetches user payment methods from the backend API and populates the payment method dropdown in the payment modal
+ * @returns {Promise<jqXHR>} A promise that resolves when the request is complete
+ */
 function fetchUserPaymentMethods() {
   return $.ajax({
     url: "../backend/public/api/user_payment_methods.php",
@@ -103,6 +114,11 @@ function fetchUserPaymentMethods() {
         $select.append(`<option value="${method}">${method}</option>`);
       });
     },
+  /**
+   * Error callback when fetching user payment methods fails
+   * @param {jqXHR} xhr The jQuery XHR object
+   * @returns {undefined}
+   */
     error: function (xhr) {
       console.error(
         "Zahlungsarten konnten nicht geladen werden:",

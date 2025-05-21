@@ -23,43 +23,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $confirm_password = trim($data["confirm_password"]);
     $payment_method = trim($data["payment_method"]);
 
-    // Validate title
+    // Validate title,firstname,lastname,address,zipcode,city,email and if its used 1 time, 
+    // username & 1 time used,password, payment method
     if (empty($title)) {
         $title_err = "Please enter a title.";
     }
 
-    // Validate firstname
     if (empty($firstname)) {
         $firstname_err = "Please enter your first name.";
     }
 
-    // Validate lastname
     if (empty($lastname)) {
         $lastname_err = "Please enter your last name.";
     }
 
-    // Validate address
     if (empty($address)) {
         $address_err = "Please enter your address.";
     }
 
-    // Validate zipcode
     if (empty($zipcode)) {
         $zipcode_err = "Please enter your zipcode.";
     }
 
-    // Validate city
     if (empty($city)) {
         $city_err = "Please enter your city.";
     }
 
-    // Validate email
     if (empty($email)) {
         $email_err = "Please enter your email.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $email_err = "Please enter a valid email.";
     } else {
-        // Check if email already exists
         $dataHandler = new DataHandler();
         $existingUser = $dataHandler->getUserByEmail($email);
         if ($existingUser) {
@@ -67,11 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Validate username
     if (empty($username)) {
         $username_err = "Please enter a username.";
     } else {
-        // Check if username already exists
         $dataHandler = new DataHandler();
         $existingUser = $dataHandler->getUserByUsername($username);
         if ($existingUser) {
@@ -79,21 +71,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Validate password
     if (empty($password)) {
         $password_err = "Please enter a password.";
     } elseif (strlen($password) < 6) {
         $password_err = "Password must have at least 6 characters.";
     }
 
-    // Validate confirm password
     if (empty($confirm_password)) {
         $confirm_password_err = "Please confirm your password.";
     } elseif ($password !== $confirm_password) {
         $confirm_password_err = "Password did not match.";
     }
 
-    // Validate payment method
     $valid_payment_methods = ["credit_card", "debit_card", "paypal"];
     if (empty($payment_method) || !in_array($payment_method, $valid_payment_methods)) {
         $payment_method_err = "Please select a valid payment method.";
