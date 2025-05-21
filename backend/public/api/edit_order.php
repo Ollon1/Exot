@@ -19,6 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($items as $item) {
         if (isset($item['delete']) && $item['delete'] === true) {
             $dataHandler->deleteOrderItem($item['order_item_id']);
+            // Neue Prüfung: Bestellung löschen, wenn leer
+            $dataHandler->deleteOrderIfEmpty($orderId);
         } else {
             // Fetch product price
             $product = $dataHandler->getProductById($item['fk_product_id']);

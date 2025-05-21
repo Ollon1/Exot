@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 19. Mai 2025 um 22:21
+-- Erstellungszeit: 21. Mai 2025 um 13:28
 -- Server-Version: 10.4.32-MariaDB
 -- PHP-Version: 8.2.12
 
@@ -80,17 +80,18 @@ CREATE TABLE `orders` (
   `shipping_cost` decimal(10,2) NOT NULL DEFAULT 2.99,
   `tracking_number` varchar(40) NOT NULL,
   `discount` varchar(30) DEFAULT '0',
-  `invoice_number` varchar(255) DEFAULT NULL
+  `invoice_number` varchar(255) DEFAULT NULL,
+  `discount_amount` decimal(10,2) DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Daten für Tabelle `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `fk_customer_id`, `total_price`, `order_status`, `order_date`, `shipping_address`, `billing_address`, `payment_method`, `shipping_cost`, `tracking_number`, `discount`, `invoice_number`) VALUES
-(50, 8, 1251.99, 'Awaiting Payment', '2025-05-18', 'Admin Street 20', 'Admin Street 20', 'paypal', 2.99, '', 'hallo1', 'INV-6829E11A85353'),
-(51, 8, 34992.99, 'Awaiting Payment', '2025-05-18', 'Admin Street 20', 'Admin Street 20', 'paypal', 2.99, '', NULL, 'INV-6829E388A94B4'),
-(52, 8, 69982.99, 'Awaiting Payment', '2025-05-18', 'Admin Street 20', 'Admin Street 20', 'paypal', 2.99, '', NULL, 'INV-6829E3AD3C794');
+INSERT INTO `orders` (`order_id`, `fk_customer_id`, `total_price`, `order_status`, `order_date`, `shipping_address`, `billing_address`, `payment_method`, `shipping_cost`, `tracking_number`, `discount`, `invoice_number`, `discount_amount`) VALUES
+(58, 8, 1301.99, 'Awaiting Payment', '2025-05-21', 'Admin Street 20', 'Admin Street 20', 'paypal', 2.99, '', NULL, 'INV-682D0401A545B', 0.00),
+(59, 8, 1301.99, 'Awaiting Payment', '2025-05-21', 'Admin Street 20', 'Admin Street 20', 'paypal', 2.99, '', NULL, 'INV-682D042CCA8B7', 0.00),
+(60, 8, 1251.99, 'Awaiting Payment', '2025-05-21', 'Admin Street 20', 'Admin Street 20', 'paypal', 2.99, '', 'R9A2IUHVMC', 'INV-682DB0D8AE75B', 50.00);
 
 -- --------------------------------------------------------
 
@@ -139,9 +140,9 @@ INSERT INTO `order_items` (`order_item_id`, `fk_order_id`, `fk_product_id`, `qua
 (60, 47, 1, 1, 1299.00),
 (61, 48, 1, 1, 1299.00),
 (62, 49, 1, 1, 1299.00),
-(63, 50, 1, 1, 1299.00),
-(64, 51, 2, 1, 34990.00),
-(65, 52, 2, 2, 69980.00);
+(71, 58, 1, 1, 1299.00),
+(72, 59, 1, 1, 1299.00),
+(73, 60, 1, 1, 1299.00);
 
 -- --------------------------------------------------------
 
@@ -169,6 +170,35 @@ INSERT INTO `product` (`product_id`, `product_name`, `product_description`, `pro
 (2, 'Weißer Tiger', 'Ein schöner Anmutiger Tiger.\r\nBemerkung: Erst kaufen, dann trainieren, dann selbst füttern, ansonsten werden Sie selbst zum Futter.', 34990.00, 190.00, 5, 'Raubtiere', 'backend/public/product_images/tiger.png'),
 (3, 'Fennek', 'Falls Sie es noch nicht wussten: Ein Fennek ist ein kleines Wüstenfuchsartiges Tier, das vor allem durch seine großen Ohren auffällt.', 1299.00, 1.65, 10, 'Illegal', 'backend/public/product_images/fennek.png'),
 (6, 'Blopfisch', 'Ein wunderschöner, anmutiger Fisch der gemeinsam mit dem Blauwal zu den schönsten und Eindrucksvollsten Tieren der Welt gehört.', 2990.00, 3.00, 10, 'Fische', 'backend/public/product_images/blop.png');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `product_reviews`
+--
+
+CREATE TABLE `product_reviews` (
+  `review_id` int(11) NOT NULL,
+  `fk_product_id` int(11) NOT NULL,
+  `rating` int(11) DEFAULT NULL CHECK (`rating` between 1 and 5),
+  `review_text` text DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Daten für Tabelle `product_reviews`
+--
+
+INSERT INTO `product_reviews` (`review_id`, `fk_product_id`, `rating`, `review_text`, `created_at`) VALUES
+(13, 1, 5, 'dfgsrdft', '2025-05-21 02:49:46'),
+(14, 1, 5, 'dgfdf', '2025-05-21 02:50:07'),
+(15, 1, 5, 'dfgdsf', '2025-05-21 02:55:32'),
+(16, 1, 4, 'sdfs', '2025-05-21 02:56:29'),
+(17, 2, 5, 'sdfgds', '2025-05-21 02:56:43'),
+(18, 3, 5, 'fghdf', '2025-05-21 03:07:21'),
+(19, 1, 1, 'dfg', '2025-05-21 03:07:36'),
+(20, 1, 4, 'hallo servus', '2025-05-21 12:50:55'),
+(21, 6, 5, 'e5terg', '2025-05-21 12:56:38');
 
 -- --------------------------------------------------------
 
@@ -222,8 +252,7 @@ CREATE TABLE `vouchers` (
 INSERT INTO `vouchers` (`id`, `voucher_code`, `expiration_date`, `discount_type`, `discount_amount`) VALUES
 (1, '30percent', '2032-11-18', 'percentage', 0.30),
 (6, 'GXI6SYZOOV', '2024-06-27', 'fixed', 20.00),
-(8, 'XRF346DMZS', '2025-05-28', 'percentage', 5.00),
-(9, '2VIKOIBARE', '2025-05-28', 'fixed', 50.00);
+(8, 'XRF346DMZS', '2025-05-28', 'percentage', 5.00);
 
 --
 -- Indizes der exportierten Tabellen
@@ -261,6 +290,13 @@ ALTER TABLE `product`
   ADD PRIMARY KEY (`product_id`);
 
 --
+-- Indizes für die Tabelle `product_reviews`
+--
+ALTER TABLE `product_reviews`
+  ADD PRIMARY KEY (`review_id`),
+  ADD KEY `fk_product_id` (`fk_product_id`);
+
+--
 -- Indizes für die Tabelle `user`
 --
 ALTER TABLE `user`
@@ -292,19 +328,25 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT für Tabelle `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT für Tabelle `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT für Tabelle `product`
 --
 ALTER TABLE `product`
   MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT für Tabelle `product_reviews`
+--
+ALTER TABLE `product_reviews`
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT für Tabelle `user`
@@ -316,7 +358,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT für Tabelle `vouchers`
 --
 ALTER TABLE `vouchers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints der exportierten Tabellen
@@ -327,6 +369,12 @@ ALTER TABLE `vouchers`
 --
 ALTER TABLE `admin`
   ADD CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`fk_userid`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
+
+--
+-- Constraints der Tabelle `product_reviews`
+--
+ALTER TABLE `product_reviews`
+  ADD CONSTRAINT `product_reviews_ibfk_1` FOREIGN KEY (`fk_product_id`) REFERENCES `product` (`product_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

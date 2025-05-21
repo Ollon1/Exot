@@ -17,7 +17,17 @@ class DataHandler
         $sql = "INSERT INTO user (salutation, firstname, lastname, address, zipcode, city, email, username, password, payment_method, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
-            $user->salutation, $user->firstname, $user->lastname, $user->address, $user->zipcode, $user->city, $user->email, $user->username, $user->password, $user->payment_method, $user->status
+            $user->salutation,
+            $user->firstname,
+            $user->lastname,
+            $user->address,
+            $user->zipcode,
+            $user->city,
+            $user->email,
+            $user->username,
+            $user->password,
+            $user->payment_method,
+            $user->status
         ]);
     }
 
@@ -94,7 +104,16 @@ class DataHandler
         $sql = "UPDATE user SET salutation = ?, firstname = ?, lastname = ?, address = ?, zipcode = ?, city = ?, email = ?, username = ?, payment_method = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
-            $user->salutation, $user->firstname, $user->lastname, $user->address, $user->zipcode, $user->city, $user->email, $user->username, $user->payment_method, $user->id
+            $user->salutation,
+            $user->firstname,
+            $user->lastname,
+            $user->address,
+            $user->zipcode,
+            $user->city,
+            $user->email,
+            $user->username,
+            $user->payment_method,
+            $user->id
         ]);
     }
 
@@ -118,7 +137,8 @@ class DataHandler
         $sql = "INSERT INTO admin (role, fk_userid) VALUES (?, ?)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
-            $admin->role, $admin->fk_userid
+            $admin->role,
+            $admin->fk_userid
         ]);
     }
 
@@ -135,7 +155,9 @@ class DataHandler
         $sql = "UPDATE admin SET role = ?, fk_userid = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
-            $admin->role, $admin->fk_userid, $admin->id
+            $admin->role,
+            $admin->fk_userid,
+            $admin->id
         ]);
     }
 
@@ -169,7 +191,13 @@ class DataHandler
         $sql = "INSERT INTO product (product_name, product_description, product_price, product_weight, product_quantity, product_category, product_imagepath) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
-            $product->product_name, $product->product_description, $product->product_price, $product->product_weight, $product->product_quantity, $product->product_category, $product->product_imagepath
+            $product->product_name,
+            $product->product_description,
+            $product->product_price,
+            $product->product_weight,
+            $product->product_quantity,
+            $product->product_category,
+            $product->product_imagepath
         ]);
     }
 
@@ -179,6 +207,11 @@ class DataHandler
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        foreach ($products as &$product) {
+            $product->latest_rating = $this->getLatestRatingForProduct($product->product_id);
+        }
+        return $products;
     }
 
     public function getProductById($product_id)
@@ -194,7 +227,14 @@ class DataHandler
         $sql = "UPDATE product SET product_name = ?, product_description = ?, product_price = ?, product_weight = ?, product_quantity = ?, product_category = ?, product_imagepath = ? WHERE product_id = ?";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
-            $product->product_name, $product->product_description, $product->product_price, $product->product_weight, $product->product_quantity, $product->product_category, $product->product_imagepath, $product->product_id
+            $product->product_name,
+            $product->product_description,
+            $product->product_price,
+            $product->product_weight,
+            $product->product_quantity,
+            $product->product_category,
+            $product->product_imagepath,
+            $product->product_id
         ]);
     }
 
@@ -216,7 +256,13 @@ class DataHandler
     }
     public function createOrder($order)
     {
-        $sql = "INSERT INTO orders (fk_customer_id, total_price, order_status, order_date, shipping_address, billing_address, payment_method, shipping_cost, tracking_number, discount, invoice_number) VALUES (:fk_customer_id, :total_price, :order_status, :order_date, :shipping_address, :billing_address, :payment_method, :shipping_cost, :tracking_number, :discount, :invoice_number)";
+        $sql = "INSERT INTO orders (
+    fk_customer_id, total_price, order_status, order_date, shipping_address, billing_address, 
+    payment_method, shipping_cost, tracking_number, discount, discount_amount, invoice_number
+) VALUES (
+    :fk_customer_id, :total_price, :order_status, :order_date, :shipping_address, :billing_address, 
+    :payment_method, :shipping_cost, :tracking_number, :discount, :discount_amount, :invoice_number
+)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':fk_customer_id', $order['fk_customer_id'], PDO::PARAM_INT);
         $stmt->bindParam(':total_price', $order['total_price'], PDO::PARAM_STR);
@@ -228,6 +274,7 @@ class DataHandler
         $stmt->bindParam(':shipping_cost', $order['shipping_cost'], PDO::PARAM_STR);
         $stmt->bindParam(':tracking_number', $order['tracking_number'], PDO::PARAM_STR);
         $stmt->bindParam(':discount', $order['discount'], PDO::PARAM_STR);
+        $stmt->bindParam(':discount_amount', $order['discount_amount'], PDO::PARAM_STR);
         $stmt->bindParam(':invoice_number', $order['invoice_number'], PDO::PARAM_STR);
         $stmt->execute();
         return $this->conn->lastInsertId();
@@ -255,9 +302,36 @@ class DataHandler
         $sql = "UPDATE orders SET fk_customer_id = ?, total_price = ?, order_status = ?, order_date = ?, shipping_address = ?, billing_address = ?, payment_method = ?, shipping_cost = ?, tracking_number = ?, discount = ? WHERE order_id = ?";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
-            $order->fk_customer_id, $order->total_price, $order->order_status, $order->order_date, $order->shipping_address, $order->billing_address, $order->payment_method, $order->shipping_cost, $order->tracking_number, $order->discount, $order->order_id
+            $order->fk_customer_id,
+            $order->total_price,
+            $order->order_status,
+            $order->order_date,
+            $order->shipping_address,
+            $order->billing_address,
+            $order->payment_method,
+            $order->shipping_cost,
+            $order->tracking_number,
+            $order->discount,
+            $order->order_id
         ]);
     }
+
+    public function deleteOrderIfEmpty($order_id)
+    {
+        $sql = "SELECT COUNT(*) FROM order_items WHERE fk_order_id = :order_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':order_id', $order_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+
+        if ($count == 0) {
+            $sqlDelete = "DELETE FROM orders WHERE order_id = :order_id";
+            $stmtDelete = $this->conn->prepare($sqlDelete);
+            $stmtDelete->bindParam(':order_id', $order_id, PDO::PARAM_INT);
+            $stmtDelete->execute();
+        }
+    }
+
 
     public function deleteOrder($order_id)
     {
@@ -401,7 +475,10 @@ class DataHandler
         $sql = "INSERT INTO vouchers (voucher_code, expiration_date, discount_type, discount_amount) VALUES (?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
-            $voucher->voucher_code, $voucher->expiration_date, $voucher->discount_type, $voucher->discount_amount
+            $voucher->voucher_code,
+            $voucher->expiration_date,
+            $voucher->discount_type,
+            $voucher->discount_amount
         ]);
     }
 
@@ -428,5 +505,22 @@ class DataHandler
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':voucher_code', $voucherCode, PDO::PARAM_STR);
         $stmt->execute();
+    }
+
+    public function getLatestRatingForProduct($productId)
+    {
+        $stmt = $this->conn->prepare("SELECT rating FROM product_reviews WHERE fk_product_id = :productId ORDER BY created_at DESC LIMIT 1");
+        $stmt->bindParam(':productId', $productId);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? (int)$result['rating'] : null;
+    }
+
+
+    public function addProductReview($product_id, $rating, $review_text)
+    {
+        $sql = "INSERT INTO product_reviews (fk_product_id, rating, review_text) VALUES (?, ?, ?)";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([$product_id, $rating, $review_text]);
     }
 }

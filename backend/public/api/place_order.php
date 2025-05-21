@@ -89,6 +89,8 @@ try {
         'shipping_cost' => $shippingCost,
         'tracking_number' => '',
         'discount' => $voucherCode ? $voucherCode : null,
+        'discount_amount' => $discountAmount,
+
         'invoice_number' => $invoiceNumber // Add invoice number
     ]);
 

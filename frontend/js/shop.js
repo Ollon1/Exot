@@ -15,7 +15,97 @@ $(document).ready(function () {
   // Fetch and display products on load
   displayProducts();
 
-  $("#available-products").on("click", "button", handleAddButtonClick);
+  $("#available-products").on("click", ".btn-primary", handleAddButtonClick);
+
+  // Review-Button klickbar machen
+  $("#available-products").on("click", ".btn-review", function () {
+    const productId = $(this).data("product-id");
+
+    // Entferne alle existierenden Formulare
+    $(".dynamic-review-form").remove();
+
+    // Erstelle das Formular-HTML
+    const formHtml = `
+    <div class="dynamic-review-form mt-2">
+      <label for="rating-${productId}">Sterne (1–5):</label>
+      <select id="rating-${productId}">
+        <option value="5">⭐️⭐️⭐️⭐️⭐️</option>
+        <option value="4">⭐️⭐️⭐️⭐️</option>
+        <option value="3">⭐️⭐️⭐️</option>
+        <option value="2">⭐️⭐️</option>
+        <option value="1">⭐️</option>
+      </select><br />
+      <label for="review-text-${productId}">Kommentar:</label><br />
+      <textarea id="review-text-${productId}" rows="3" cols="30"></textarea><br />
+      <button class="btn btn-sm btn-success submit-review-btn" data-product-id="${productId}">Absenden</button>
+    </div>
+  `;
+
+    // Füge das Formular zum aktuellen Produkt hinzu (neben dem Button)
+    $(this).closest(".row").find(".col-md-6").append(formHtml);
+  });
+
+  $("#available-products").on("click", ".submit-review-btn", function () {
+    const productId = $(this).data("product-id");
+    const rating = $(`#rating-${productId}`).val();
+    const reviewText = $(`#review-text-${productId}`).val();
+
+    $.ajax({
+      type: "POST",
+      url: "../backend/public/api/submit_review.php",
+      contentType: "application/json",
+      dataType: "json",
+      data: JSON.stringify({
+        product_id: productId,
+        rating: rating,
+        review_text: reviewText,
+      }),
+      success: function (response) {
+        if (response.status === "success") {
+          alert("Danke für deine Bewertung!");
+          $(`#rating-${productId}`).val("5");
+          $(`#review-text-${productId}`).val("");
+          $(".dynamic-review-form").remove();
+        } else {
+          alert("Fehler beim Speichern der Bewertung.");
+        }
+      },
+      error: function () {
+        alert("Serverfehler bei der Bewertung.");
+      },
+    });
+  });
+
+  // Bewertungs-Formular absenden
+  $("#submit-review").click(function () {
+    const productId = $("#review-form").data("product-id");
+    const rating = $("#rating").val();
+    const reviewText = $("#review-text").val();
+
+    $.ajax({
+      type: "POST",
+      url: "../backend/public/api/submit_review.php",
+      contentType: "application/json",
+      data: JSON.stringify({
+        product_id: productId,
+        rating: rating,
+        review_text: reviewText,
+      }),
+      success: function (response) {
+        if (response.status === "success") {
+          alert("Danke für deine Bewertung!");
+          $("#review-form").hide();
+          $("#review-text").val("");
+          $("#rating").val("5");
+        } else {
+          alert("Fehler beim Speichern der Bewertung.");
+        }
+      },
+      error: function () {
+        alert("Serverfehler bei der Bewertung.");
+      },
+    });
+  });
   $("#shoppingcart").on("click", "a", handleRemoveClick);
   $("#search-button").click(function () {
     const query = $("#product-search").val();
@@ -159,6 +249,10 @@ $(document).ready(function () {
       }</b></p>
                     <p><b>Weight:</b> ${product.product_weight} kg</p>
                     <p><b>Category:</b> ${product.product_category}</p>
+<p><b>Rating:</b> ${
+        product.latest_rating ? product.latest_rating + " ⭐" : "No ratings yet"
+      }</p>
+
                     <div class="row">
                         <div class="col-md-6">
                             <p>${product.product_description}</p>
@@ -170,12 +264,20 @@ $(document).ready(function () {
                             <button data-product='${JSON.stringify(
                               product
                             )}' type="button" class="btn btn-primary">+ Add</button>
+                            <button class="btn btn-secondary btn-review" data-product-id="${
+                              product.product_id
+                            }">
+  Jetzt bewerten
+</button>
+
+
                         </div>
                     </div>
                 </li>
             `;
     });
     $("#available-products").html(listing);
+    $("#review-form").hide(); // Optional: immer verstecken beim Neuladen
   }
 
   function updateCartDisplay() {

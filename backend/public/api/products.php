@@ -12,6 +12,7 @@ try {
             // Fetch a single product by ID
             $product = $dataHandler->getProductById($_GET['product_id']);
             if ($product) {
+                $product->latest_rating = $dataHandler->getLatestRatingForProduct($product->product_id);
                 echo json_encode($product);
             } else {
                 http_response_code(404);
@@ -27,8 +28,10 @@ try {
                 echo json_encode(['error' => 'Voucher not found']);
             }
         } else {
-            // Fetch all products
             $products = $dataHandler->getAllProducts();
+            foreach ($products as &$product) {
+                $product->latest_rating = $dataHandler->getLatestRatingForProduct($product->product_id);
+            }
             echo json_encode($products);
         }
     } else {
