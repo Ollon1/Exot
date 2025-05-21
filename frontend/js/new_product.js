@@ -21,6 +21,12 @@ $(document).ready(function () {
 			data: formData,
 			processData: false,
 			contentType: false,
+		/**
+		 * Success callback for adding a new product.
+		 * @param {object} response - The response from the server.
+		 * @prop {string} status - The status of the request. Either "success" or "error".
+		 * @prop {string} [error] - The error message if status is "error".
+		 */
 			success: function (response) {
 				console.log('Response: ', response);
 				if (response.status === 'success') {
@@ -30,6 +36,12 @@ $(document).ready(function () {
 					alert('Failed to add product: ' + response.error);
 				}
 			},
+			/**
+			 * Error callback for adding a new product.
+			 * @param {object} xhr - The XMLHttpRequest object.
+			 * @param {string} status - The status of the request. Either "error" or "timeout".
+			 * @param {string} error - The error type.
+			 */
 			error: function (xhr, status, error) {
 				console.error('Error: ', xhr.responseText);
 				alert('An error occurred: ' + xhr.responseText);
@@ -37,6 +49,13 @@ $(document).ready(function () {
 		});
 	});
 
+/**
+ * Fetches product categories from the server and populates the product category dropdown.
+ * Utilizes an AJAX GET request to retrieve category data in JSON format.
+ * On success, clears the existing options in the category dropdown and appends
+ * new options for each category fetched.
+ * Logs any errors encountered during the request to the console.
+ */
 	function fetchCategories() {
 		$.ajax({
 			url: '../backend/public/api/categories.php',

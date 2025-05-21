@@ -57,6 +57,7 @@ $(document).ready(function () {
 	// Function to handle navigation click events
 	function handleNavigationClick(event, pageName) {
 		event.preventDefault(); // Prevent the default anchor behavior
+		window.history.pushState({}, "", "?page=" + pageName); // Update the URL
 		$('#main-content').load('sites/' + pageName + '.html');
 	}
 
@@ -117,7 +118,6 @@ $(document).ready(function () {
 		if (errors.username_err) {
 			showErrorAlert(errors.username_err, '#username');
 		}
-		// Add similar checks for other fields if needed
 	}
 
 	// Function to show error alert

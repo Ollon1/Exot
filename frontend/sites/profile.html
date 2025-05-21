@@ -26,88 +26,49 @@
 								<!-- First Name -->
 								<div class="col-md-6">
 									<label class="form-label">First Name *</label>
-									<input
-										type="text"
-										class="form-control"
-										id="firstname"
-										name="firstname"
-										placeholder="John"
-										disabled />
+									<input type="text" class="form-control" id="firstname" name="firstname"
+										placeholder="John" disabled />
 								</div>
 								<!-- Last Name -->
 								<div class="col-md-6">
 									<label class="form-label">Last Name *</label>
-									<input
-										type="text"
-										class="form-control"
-										id="lastname"
-										name="lastname"
-										placeholder="Doe"
-										disabled />
+									<input type="text" class="form-control" id="lastname" name="lastname"
+										placeholder="Doe" disabled />
 								</div>
 								<!-- Email  -->
 								<div class="col-md-6">
 									<label for="email" class="form-label">Email *</label>
-									<input
-										type="email"
-										class="form-control"
-										id="email"
-										name="email"
-										placeholder="j****@gmail.com"
-										disabled />
+									<input type="email" class="form-control" id="email" name="email"
+										placeholder="j****@gmail.com" disabled />
 								</div>
 								<!-- Username -->
 								<div class="col-md-6">
 									<label class="form-label">Username *</label>
-									<input
-										type="text"
-										class="form-control"
-										id="username"
-										name="username"
-										placeholder="john_doe"
-										disabled />
+									<input type="text" class="form-control" id="username" name="username"
+										placeholder="john_doe" disabled />
 								</div>
 								<!-- Address -->
 								<div class="col-md-12">
 									<label class="form-label">Address *</label>
-									<input
-										type="text"
-										class="form-control"
-										id="address"
-										name="address"
-										placeholder="1234 M*** St"
-										disabled />
+									<input type="text" class="form-control" id="address" name="address"
+										placeholder="1234 M*** St" disabled />
 								</div>
 								<!-- Zip Code -->
 								<div class="col-md-6">
 									<label class="form-label">Zip Code *</label>
-									<input
-										type="text"
-										class="form-control"
-										id="zipcode"
-										name="zipcode"
-										placeholder="12345"
-										disabled />
+									<input type="text" class="form-control" id="zipcode" name="zipcode"
+										placeholder="12345" disabled />
 								</div>
 								<!-- City -->
 								<div class="col-md-6">
 									<label class="form-label">City *</label>
-									<input
-										type="text"
-										class="form-control"
-										id="city"
-										name="city"
-										placeholder="New York"
+									<input type="text" class="form-control" id="city" name="city" placeholder="New York"
 										disabled />
 								</div>
 								<!-- Payment Method -->
 								<div class="col-md-6">
 									<label class="form-label">Payment Method *</label>
-									<select
-										class="form-control"
-										id="payment_method"
-										name="payment_method"
-										disabled>
+									<select class="form-control" id="payment_method" name="payment_method" disabled>
 										<option value="">Select Payment Method</option>
 										<option value="credit_card">Credit Card</option>
 										<option value="debit_card">Debit Card</option>
@@ -120,10 +81,7 @@
 								</div>
 							</div>
 							<div class="col-md-6 mt-3">
-								<button
-									type="button"
-									class="btn btn-primary btn-md"
-									data-bs-toggle="modal"
+								<button type="button" class="btn btn-primary btn-md" data-bs-toggle="modal"
 									data-bs-target="#changePasswordModal">
 									Change Password
 								</button>
@@ -135,33 +93,20 @@
 
 				<!-- Button -->
 				<div class="gap-3 d-md-flex justify-content-md-end text-center">
-					<button
-						type="button"
-						id="edit-profile-btn"
-						class="btn btn-warning btn-md">
+					<button type="button" id="edit-profile-btn" class="btn btn-warning btn-md">
 						Edit Profile
 					</button>
-					<button
-						type="button"
-						id="cancel-profile-btn"
-						class="btn btn-outline-secondary btn-md"
+					<button type="button" id="cancel-profile-btn" class="btn btn-outline-secondary btn-md"
 						style="display: none">
 						Cancel
 					</button>
-					<button
-						type="submit"
-						class="btn btn-outline-success btn-md"
-						id="update-profile-btn"
-						disabled>
+					<button type="submit" class="btn btn-outline-success btn-md" id="update-profile-btn" disabled>
 						Update profile
 					</button>
 				</div>
 
 				<!-- Delete Account Button -->
-				<button
-					type="button"
-					class="btn btn-outline-danger btn-md"
-					data-bs-toggle="modal"
+				<button type="button" class="btn btn-outline-danger btn-md" data-bs-toggle="modal"
 					data-bs-target="#deleteAccountModal">
 					Delete profile
 				</button>
@@ -173,11 +118,7 @@
 </div>
 
 <!-- Change Password Modal -->
-<div
-	class="modal fade"
-	id="changePasswordModal"
-	tabindex="-1"
-	aria-labelledby="changePasswordModalLabel"
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -185,43 +126,21 @@
 				<h5 class="modal-title" id="changePasswordModalLabel">
 					Change Password
 				</h5>
-				<button
-					type="button"
-					class="btn-close"
-					data-bs-dismiss="modal"
-					aria-label="Close"></button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
 				<form id="change-password-form">
 					<div class="mb-3">
-						<label for="current-password-modal" class="form-label"
-							>Current Password</label
-						>
-						<input
-							type="password"
-							class="form-control"
-							id="current-password-modal"
-							required />
+						<label for="current-password-modal" class="form-label">Current Password</label>
+						<input type="password" class="form-control" id="current-password-modal" required />
 					</div>
 					<div class="mb-3">
-						<label for="new-password-modal" class="form-label"
-							>New Password</label
-						>
-						<input
-							type="password"
-							class="form-control"
-							id="new-password-modal"
-							required />
+						<label for="new-password-modal" class="form-label">New Password</label>
+						<input type="password" class="form-control" id="new-password-modal" required />
 					</div>
 					<div class="mb-3">
-						<label for="confirm-new-password-modal" class="form-label"
-							>Confirm New Password</label
-						>
-						<input
-							type="password"
-							class="form-control"
-							id="confirm-new-password-modal"
-							required />
+						<label for="confirm-new-password-modal" class="form-label">Confirm New Password</label>
+						<input type="password" class="form-control" id="confirm-new-password-modal" required />
 					</div>
 					<button type="submit" class="btn btn-primary">Change Password</button>
 				</form>
@@ -231,11 +150,7 @@
 </div>
 
 <!-- Password Confirmation Modal -->
-<div
-	class="modal fade"
-	id="passwordConfirmModal"
-	tabindex="-1"
-	aria-labelledby="passwordConfirmModalLabel"
+<div class="modal fade" id="passwordConfirmModal" tabindex="-1" aria-labelledby="passwordConfirmModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -243,21 +158,13 @@
 				<h5 class="modal-title" id="passwordConfirmModalLabel">
 					Confirm Password
 				</h5>
-				<button
-					type="button"
-					class="btn-close"
-					data-bs-dismiss="modal"
-					aria-label="Close"></button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
 				<form id="password-confirm-form">
 					<div class="mb-3">
 						<label for="confirm-password" class="form-label">Password</label>
-						<input
-							type="password"
-							class="form-control"
-							id="confirm-password"
-							required />
+						<input type="password" class="form-control" id="confirm-password" required />
 					</div>
 					<button type="submit" class="btn btn-primary">Confirm</button>
 				</form>
@@ -267,33 +174,19 @@
 </div>
 
 <!-- Delete Account Modal -->
-<div
-	class="modal fade"
-	id="deleteAccountModal"
-	tabindex="-1"
-	aria-labelledby="deleteAccountModalLabel"
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="deleteAccountModalLabel">Delete Account</h5>
-				<button
-					type="button"
-					class="btn-close"
-					data-bs-dismiss="modal"
-					aria-label="Close"></button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
 				<form id="delete-account-form">
 					<div class="mb-3">
-						<label for="delete-password-modal" class="form-label"
-							>Password</label
-						>
-						<input
-							type="password"
-							class="form-control"
-							id="delete-password-modal"
-							required />
+						<label for="delete-password-modal" class="form-label">Password</label>
+						<input type="password" class="form-control" id="delete-password-modal" required />
 					</div>
 					<button type="submit" class="btn btn-danger">Confirm Delete</button>
 				</form>

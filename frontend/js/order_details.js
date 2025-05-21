@@ -88,6 +88,12 @@ $(document).ready(function () {
     });
   }
 
+/**
+ * Opens a new window with the invoice details for the given order
+ * @param {Object} order - The order object, containing the order ID, invoice number, date, shipping and billing addresses, total price, and shipping cost
+ * @param {Array} orderItems - An array of order item objects, each containing the product name, quantity, and subtotal
+ * @param {number} discountAmount - The discount amount for the order
+ */
   function openInvoiceWindow(order, orderItems, discountAmount) {
     var newWindow = window.open("", "_blank");
     var totalAmount = parseFloat(order.total_price) - discountAmount;
